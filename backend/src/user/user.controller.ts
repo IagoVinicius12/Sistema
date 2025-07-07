@@ -9,7 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class  UserController {
   constructor(private prisma: PrismaService, private userService:UserService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }

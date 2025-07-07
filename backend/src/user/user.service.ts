@@ -2,6 +2,8 @@ import { ConflictException, Injectable, InternalServerErrorException } from '@ne
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient } from '@prisma/client';
+import { User } from './entities/user.entity';
+import { userInfo } from 'os';
 
 const prisma = new PrismaClient
 
@@ -14,7 +16,7 @@ export class UserService {
       if(verification){
         throw new ConflictException('O email já está cadastrado')
       }
-      const cadastrando_usuario= await prisma.create({
+      const cadastrando_usuario= await prisma.user.create({
         data:{
           email:new_user.email,
           password: new_user.password,
@@ -29,8 +31,8 @@ export class UserService {
     }
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    return await prisma.user.findMany();
   }
 
   findOne(id: number) {
