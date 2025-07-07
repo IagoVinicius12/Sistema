@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nest
+    ports:
+      - "5400:5400"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/nest
+    ports:
+      - "3050:3000"
+    command: sh -c "npx prisma migrate deploy && npm run start:prod"
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   ports:
+  #     - "8080:8080"
+    # comando para iniciar o frontend, ex:
+    # command: npm run start
+
+volumes:
+  postgres_data:
