@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Injectable } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@Injectable()
+export class  UserController {
+  constructor(private prisma: PrismaService, private userService:UserService) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
