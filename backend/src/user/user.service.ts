@@ -1,9 +1,10 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient } from '@prisma/client';
 import { User } from './entities/user.entity';
 import { userInfo } from 'os';
+import { NotFoundError } from 'rxjs';
 
 const prisma = new PrismaClient
 
@@ -35,8 +36,20 @@ export class UserService {
     return await prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+
+    const userId=id;
+
+    try{
+      const user= await prisma.user.findUnique({where:{id:userId}})
+      if(!user){
+        throw new NotFoundException('O usuário não existe!')
+      }
+      return user
+    }
+    catch(error){
+      return error
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
