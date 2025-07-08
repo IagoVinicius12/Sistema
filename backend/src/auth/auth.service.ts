@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import {PrismaClient } from '@prisma/client';
 import { LoginDto } from './dto/login.dto';
 import { Response } from 'express';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -17,8 +18,12 @@ export class AuthService {
   async signIn(login:LoginDto, res:Response): Promise<{ access_token: string }> {
     const email=login.email
     const user = await prisma.user.findUnique({ where: { email } });
+    if(!user){
+      throw new NotFoundException()
+    }
+    const pass=await bcrypt.compare(login.password,user?.password)
 
-    if (!user || user.password !== login.password) {
+    if (!pass) {
       throw new UnauthorizedException();
     }
 
@@ -33,6 +38,10 @@ export class AuthService {
     return {
       access_token:token
     };
+  }
+  async logout(res:Response){
+    res.clearCookie('access_token')
+    return 'Logout realizado com sucesso'
   }
 
   async validateUserById(userId: number) {

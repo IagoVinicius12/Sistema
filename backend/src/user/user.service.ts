@@ -2,26 +2,24 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient } from '@prisma/client';
-import { User } from './entities/user.entity';
-import { userInfo } from 'os';
-import { NotFoundError } from 'rxjs';
+import * as bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient
 
+const prisma = new PrismaClient()
 @Injectable()
 export class UserService {
   async create(createUserDto: CreateUserDto) {
     const new_user=createUserDto;
-    console.log(process.env.JWT_SECRET)
     try{
       const verification= await prisma.user.findUnique({where:{email:new_user.email}}) 
       if(verification){
         throw new ConflictException('O email já está cadastrado')
       }
+      const senha_hash=await bcrypt.hash(new_user.password,10)
       const cadastrando_usuario= await prisma.user.create({
         data:{
           email:new_user.email,
-          password: new_user.password,
+          password: senha_hash,
           name: new_user.name,
           created_at: new Date()
         }
