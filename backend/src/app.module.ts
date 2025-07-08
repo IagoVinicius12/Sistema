@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
       envFilePath: '.env', // Especifica o caminho do arquivo .env
     }),
     PrismaModule, // Importe o PrismaModule PRIMEIRO
-    UserModule, AuthModule,    // Depois os módulos que dependem do banco
+    UserModule, AuthModule, ProductsModule,    // Depois os módulos que dependem do banco
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -33,7 +33,7 @@ export class AuthService {
       httpOnly:true,
       sameSite:'lax',
       secure:true,
-      maxAge:60*1000
+      maxAge:60*1000*60
     })
     return {
       access_token:token
