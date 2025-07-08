@@ -24,7 +24,8 @@ export class UserService {
           created_at: new Date()
         }
       })
-      return cadastrando_usuario;
+      const {password,...user_no_pass}=cadastrando_usuario
+      return user_no_pass;
     }
     catch(error){
       return error
@@ -32,7 +33,8 @@ export class UserService {
   }
 
   async findAll() {
-    return await prisma.user.findMany();
+    const [password,...user_no_pass]=await prisma.user.findMany();
+    return user_no_pass
   }
 
   async findOne(id: number) {
@@ -44,7 +46,8 @@ export class UserService {
       if(!user){
         throw new NotFoundException('O usuário não existe!')
       }
-      return user
+      const {password,...user_no_pass}=user
+      return user_no_pass
     }
     catch(error){
       return error
