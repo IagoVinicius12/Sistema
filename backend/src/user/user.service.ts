@@ -33,9 +33,12 @@ export class UserService {
   }
 
   async findAll() {
-    const [password,...user_no_pass]=await prisma.user.findMany();
-    return user_no_pass
-  }
+  const users = await prisma.user.findMany();
+
+  const usersWithoutPassword = users.map(({ password, ...user }) => user);
+
+  return usersWithoutPassword;
+}
 
   async findOne(id: number) {
 

@@ -9,7 +9,7 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
-
+RUN ls -la node_modules/@prisma/client
 RUN npm run build
 
 RUN ls -la node_modules/.prisma/client || echo "PRISMA CLIENT NÃO ENCONTRADO"
