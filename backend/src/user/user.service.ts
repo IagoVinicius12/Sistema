@@ -12,6 +12,7 @@ const prisma = new PrismaClient
 export class UserService {
   async create(createUserDto: CreateUserDto) {
     const new_user=createUserDto;
+    console.log(process.env.JWT_SECRET)
     try{
       const verification= await prisma.user.findUnique({where:{email:new_user.email}}) 
       if(verification){
