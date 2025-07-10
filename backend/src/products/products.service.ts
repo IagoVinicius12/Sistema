@@ -89,6 +89,6 @@ export class ProductsService {
     catch(error){
       return error
     }
-    return 'Produto deletado com sucesso!';
+    return {message:'Produto deletado com sucesso!'};
   }
 }
