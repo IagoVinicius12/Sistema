@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import passport from 'passport';
 
 
 const prisma = new PrismaClient()
@@ -57,8 +58,27 @@ export class UserService {
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    try{
+      const user_to_update= await prisma.user.findUnique({where:{id:id}})
+      if(!user_to_update){
+        throw new NotFoundException('Usuário não encontrado!')
+      }
+      const control=await prisma.user.update({
+        where:{id:id},
+        data:{
+          name:updateUserDto.name||user_to_update.name,
+          password:user_to_update.password,
+          email:user_to_update.email
+        }
+      }
+      )
+      const {password,...user_return}=control
+      return user_return
+    }
+    catch(error){
+      error
+    }
   }
 
   remove(id: number) {
