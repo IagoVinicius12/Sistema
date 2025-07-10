@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaClient } from '@prisma/client';
@@ -28,12 +28,17 @@ export class ProductsService {
       return cadastro_produto
     }
     catch (error) {
-      return error
+      throw new InternalServerErrorException('Erro interno do servidor!')
     }
   }
 
   async findAll() {
-    return await prisma.product.findMany();
+    try{
+      return await prisma.product.findMany();
+    }
+    catch(error){
+      throw new InternalServerErrorException('Erro interno de servidor!')
+    }
   }
 
   async findOne(id: number) {
@@ -44,7 +49,7 @@ export class ProductsService {
       }
     }
     catch(error){
-      return error
+      throw new InternalServerErrorException('Erro interno de servidor!')
     } 
   }
 
