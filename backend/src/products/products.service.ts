@@ -37,7 +37,15 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
-    return await prisma.product.findUnique({ where: { id: id } })
+    try{
+      const produto=await prisma.product.findUnique({ where: { id: id } })
+      if(!produto){
+        throw new NotFoundException('Produto não encontrado')
+      }
+    }
+    catch(error){
+      return error
+    } 
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
@@ -69,7 +77,13 @@ export class ProductsService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    try{
+      await prisma.product.delete({where:{id:id}})
+    }
+    catch(error){
+      return error
+    }
+    return 'Produto deletado com sucesso!';
   }
 }
