@@ -29,6 +29,7 @@ export class CartService {
     }
   }
 
+
   findAll() {
     return `This action returns all cart`;
   }
@@ -37,8 +38,26 @@ export class CartService {
     return `This action returns a #${id} cart`;
   }
 
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
+  async update(id: number, updateCartDto: UpdateCartDto) {
+
+    try{
+      const carrinho= await prisma.cart.update({
+        where:{id:updateCartDto.cartId},
+        cartItems:{
+          create:{
+            productId:updateCartDto.productId,
+            quantity:updateCartDto.quantity
+          }
+        }
+      })
+      if(!carrinho){
+        throw new NotFoundException('Ocorreu um erro!')
+      }
+      return carrinho
+    }
+    catch(error){
+      return error
+    }
   }
 
   remove(id: number) {
