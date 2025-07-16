@@ -34,5 +34,14 @@ services:
       - "3050:3000"
     command: sh -c "npx prisma migrate deploy && npm run start:prod"
 
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     depends_on:
+  #       postgres:
+  #         condition: service_health
+  #     ports:
+  #       - "5000:5000"
+
 volumes:
   postgres_data:
