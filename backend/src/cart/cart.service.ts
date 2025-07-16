@@ -2,7 +2,6 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { PrismaClient } from '@prisma/client';
-import { connect } from 'http2';
 
 const prisma = new PrismaClient()
 
@@ -10,28 +9,37 @@ const prisma = new PrismaClient()
 export class CartService {
   async create(createCartDto: CreateCartDto) {
 
-    try{
-      const user=await prisma.user.findUnique({where:{id:createCartDto.userId}})
-      if(!user){
+    try {
+      const user = await prisma.user.findUnique({ where: { id: createCartDto.userId } })
+      if (!user) {
         throw new NotFoundException('Usuário não encontrado')
       }
-      const carrinho= await prisma.cart.create(
+      const carrinho = await prisma.cart.create(
         {
-          data:{
+          data: {
             userId: createCartDto.userId,
           }
         }
       )
       return carrinho
     }
-    catch(error){
+    catch (error) {
       throw new InternalServerErrorException('Erro interno do servidor')
     }
   }
 
 
-  findAll() {
-    return `This action returns all cart`;
+  async findAll() {
+    try{
+      const carrinhos=await prisma.cart.findMany()
+      if(!carrinhos){
+        throw new NotFoundException('Não há carrinhos!')
+      }
+      return carrinhos
+    }
+    catch(error){
+      return error
+    }
   }
 
   findOne(id: number) {
@@ -40,22 +48,24 @@ export class CartService {
 
   async update(id: number, updateCartDto: UpdateCartDto) {
 
-    try{
-      const carrinho= await prisma.cart.update({
-        where:{id:updateCartDto.cartId},
-        cartItems:{
-          create:{
-            productId:updateCartDto.productId,
-            quantity:updateCartDto.quantity
+    try {
+      const carrinho = await prisma.cart.update({
+        where: { id: id },
+        data: {
+          items: {
+            create: {
+              productId: updateCartDto.productId,
+              quantity: updateCartDto.quantity
+            }
           }
         }
       })
-      if(!carrinho){
+      if (!carrinho) {
         throw new NotFoundException('Ocorreu um erro!')
       }
       return carrinho
     }
-    catch(error){
+    catch (error) {
       return error
     }
   }
