@@ -31,7 +31,15 @@ export class CartService {
 
   async findAll() {
     try{
-      const carrinhos=await prisma.cart.findMany()
+      const carrinhos=await prisma.cart.findMany({
+        include:{
+          items:{
+            include:{
+              product:true
+            }
+          }
+        }
+      })
       if(!carrinhos){
         throw new NotFoundException('Não há carrinhos!')
       }
@@ -56,6 +64,13 @@ export class CartService {
             create: {
               productId: updateCartDto.productId,
               quantity: updateCartDto.quantity
+            }
+          }
+        },
+        include:{
+          items:{
+            include:{
+              product:true
             }
           }
         }
