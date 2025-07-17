@@ -1,3 +1,12 @@
+
+
+export interface User{
+  id:number
+  name:string
+  email:string
+}
+
+
 export async function Submit_login(email:string,password:string):Promise<string>{
     try{
       const response = await fetch('http://localhost:3050/auth/login',{
@@ -46,7 +55,8 @@ export async function Submit_get_users(token:string){
       })
       const data = await response.json()
       console.log(data)
+      return data as User[]
     }catch(err){
-
+      throw err
     }
   }
