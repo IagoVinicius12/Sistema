@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Submit_get_users, Submit_login } from '../Requisitions/login'
 
 
-export default function Login() {
+export default function Home() {
     const handle_get_all = async () => {
         try {
             const token: string | null = localStorage.getItem('authToken')
