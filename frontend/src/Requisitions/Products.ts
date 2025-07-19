@@ -5,7 +5,7 @@ export interface Products{
     name:string
 }
 
-export async function Create_Product(name:string, price:number, quantity:number, token:string){
+export async function Submit_Create_Product(name:string, price:number, quantity:number, token:string){
     try{
         const response=await fetch('http://localhost:3050/products/create',
             {
@@ -31,7 +31,7 @@ export async function Create_Product(name:string, price:number, quantity:number,
     }
 }   
 
-export async function Get_all_products() {
+export async function Submit_Get_all_products() {
     try{
 
         const response= await fetch('http://localhost:3050/products/listall',{
@@ -46,9 +46,9 @@ export async function Get_all_products() {
         }
         const data=await response.json()
         console.log(data)
-        return data as Products
+        return data as Products[]
 
     }catch(err){
-        return err
+        throw err
     }
 }
