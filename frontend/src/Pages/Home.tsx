@@ -1,6 +1,5 @@
-import Input from '../Components/Input'
 import { useEffect, useState } from 'react'
-import { Submit_get_users, Submit_login, type User } from '../Requisitions/login'
+import { Submit_get_users, type User } from '../Requisitions/login'
 
 
 export default function Home() {

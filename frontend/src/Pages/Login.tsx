@@ -1,7 +1,6 @@
 import Input from '../Components/Input'
 import { useState } from 'react'
 import { Submit_login } from '../Requisitions/login'
-import Home from './Home'
 import { useNavigate } from 'react-router-dom'
 
 
