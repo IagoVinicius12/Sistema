@@ -10,8 +10,8 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto) {
 
     const product = createProductDto
+    console.log(product)
 
-    try {
       const verification = await prisma.product.findFirst({where:{name:product.name}})
 
       if (verification) {
@@ -26,10 +26,6 @@ export class ProductsService {
       })
 
       return cadastro_produto
-    }
-    catch (error) {
-      throw new InternalServerErrorException('Erro interno do servidor!')
-    }
   }
 
   async findAll() {

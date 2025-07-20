@@ -6,16 +6,22 @@ export default function Products() {
     const [products, setProd] = useState<Products[]>()
     const [name, setName] = useState<string>('')
     const [price, setPrice] = useState<number>(0)
+    const [str_price,setSTRprice]=useState<string>('')
+    const [str_quantity,setSTRquantity]=useState<string>('')
     const [quantity, setQuantity] = useState<number>(0)
 
     const handle_typing_product_name = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value)
     }
     const handle_typing_product_price = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value)
+        const price_input=Number(e.target.value)
+        setPrice(price_input)
+        setSTRprice(e.target.value)
     }
     const handle_typing_product_quantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value)
+        const quantity_input=parseFloat(e.target.value)
+        setQuantity(quantity_input)
+        setSTRquantity(e.target.value)
     }
 
     const handle_get_all_products = async () => {
@@ -30,6 +36,7 @@ export default function Products() {
         }
     }
     const handle_create_product = async () => {
+        console.log(name, price, quantity)
         const token: string | null = localStorage.getItem('authToken')
         if (!token) {
             throw new Error('Não autorizado!!')
@@ -37,14 +44,19 @@ export default function Products() {
         await Submit_Create_Product(name, price, quantity, token)
     }
 
+    const handle_update_all_products=async ()=>{
+        await handle_create_product()
+        await handle_get_all_products()
+    }
+
     return (
         <>
             <div className='flex flex-col justify-center items-center bg-white h-svh'>
                 <div className="flex flex-col">
                     <Input placeholder="Name" value={name} onChange={handle_typing_product_name}></Input>
-                    <Input placeholder="Price" value={price} onChange={handle_typing_product_price} ></Input>
-                    <Input placeholder="Quantity" value={quantity} onChange={handle_typing_product_quantity}></Input>
-                    <button onClick={handle_create_product}>Criar</button>
+                    <Input placeholder="Price" value={str_price} onChange={handle_typing_product_price} ></Input>
+                    <Input placeholder="Quantity" value={str_quantity} onChange={handle_typing_product_quantity} ></Input>
+                    <button onClick={handle_update_all_products}>Criar</button>
                 </div>
                 <table className="min-w-full bg-white border border-gray-200">
                     <thead>
