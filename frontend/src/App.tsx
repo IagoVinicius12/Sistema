@@ -3,6 +3,7 @@ import Login from './Pages/Login';
 import Create_ACC from './Pages/Create_ACC';
 import Home from './Pages/Home';
 import Products from './Pages/Products';
+import Catalog from './Pages/Catalog';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Link to="/about">Create</Link>
           <Link to="/home">Home</Link>
           <Link to="/products">Products</Link>
+          <Link to="/catalog">catalog</Link>
         </nav>
       </div>
 
@@ -22,6 +24,7 @@ function App() {
         <Route path="/about" element={<Create_ACC />} />
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />}></Route>
+        <Route path="/catalog" element={<Catalog />}></Route>
       </Routes>
     </Router>
   );
