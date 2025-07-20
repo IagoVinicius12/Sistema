@@ -54,3 +54,18 @@ export async function Submit_Get_all_products() {
         throw err
     }
 }
+
+export async function Submit_Delete_Product(id:number,token:string){
+    const response= await fetch(`http://localhost:3050/products/delete/${id}`,{
+        method:'DELETE',
+        headers:{
+            'Content-type':'application/json',
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    if(!response.ok){
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Erro desconhecido no servidor')
+    }
+    return {message:'Produto deletado com sucesso!!'}
+}

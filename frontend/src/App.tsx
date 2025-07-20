@@ -8,10 +8,10 @@ import Products from './Pages/Products';
 function App() {
   return (
     <Router>
-      <div>
-        <nav className='flex justify-center gap-5'>
+      <div className="fixed top-0 left-0 w-full h-16 bg-black text-white z-10 flex items-center justify-center">
+        <nav className="flex gap-5">
           <Link to="/">Sign In</Link>
-          <Link to="/about"> Create</Link>
+          <Link to="/about">Create</Link>
           <Link to="/home">Home</Link>
           <Link to="/products">Products</Link>
         </nav>
@@ -20,8 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/about" element={<Create_ACC />} />
-        <Route path="/home" element={<Home/>}/>
-        <Route path="/products" element={<Products/>}></Route>
+        <Route path="/home" element={<Home />} />
+        <Route path="/products" element={<Products />}></Route>
       </Routes>
     </Router>
   );
