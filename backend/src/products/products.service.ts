@@ -43,6 +43,7 @@ export class ProductsService {
       if(!produto){
         throw new NotFoundException('Produto não encontrado')
       }
+      return produto
     }
     catch(error){
       throw new InternalServerErrorException('Erro interno de servidor!')

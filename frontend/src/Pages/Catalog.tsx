@@ -18,9 +18,9 @@ export default function Catalog() {
     }
 
     return (
-        
+    
+
         <div className="w-svw h-svh flex flex-col justify-center items-center pt-18 overflow-x-hidden">
-            <Carousel/>
             <div className="flex bg-amber-50 justify-center flex-wrap w-[50%] h-[100%] gap-0.5">
                 {products?.map((product, index) => (
                     <Card key={index} name={product.name} price={product.price}></Card>
