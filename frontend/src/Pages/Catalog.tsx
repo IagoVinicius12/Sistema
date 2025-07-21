@@ -2,6 +2,7 @@ import { Submit_Get_all_products } from "../Requisitions/Products"
 import type { Products } from "../Requisitions/Products"
 import { useEffect, useState } from "react"
 import Card from "../Components/Card"
+import Carousel from "../Components/Carousel"
 
 
 export default function Catalog() {
@@ -17,12 +18,14 @@ export default function Catalog() {
     }
 
     return (
+        
         <div className="w-svw h-svh flex flex-col justify-center items-center pt-18 overflow-x-hidden">
+            <Carousel/>
             <div className="flex bg-amber-50 justify-center flex-wrap w-[50%] h-[100%] gap-0.5">
-            {products?.map((product, index) => (
+                {products?.map((product, index) => (
                     <Card key={index} name={product.name} price={product.price}></Card>
-            ))}
-             </div>
+                ))}
+            </div>
         </div>
     )
 }
