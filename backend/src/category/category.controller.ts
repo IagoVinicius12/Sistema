@@ -8,13 +8,13 @@ import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Post()
+  @Post('create')
   @UseGuards(JwtAuthGuard)
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.create(createCategoryDto);
   }
 
-  @Get()
+  @Get('listall')
   findAll() {
     return this.categoryService.findAll();
   }
@@ -29,7 +29,7 @@ export class CategoryController {
     return this.categoryService.update(+id, updateCategoryDto);
   }
 
-  @Patch(':id')
+  @Patch('add_prod/:id')
   @UseGuards(JwtAuthGuard)
   add_product_to_category(@Param('id') id:string, @Body() name:string){
     return this.categoryService.add_product(+id,name)
