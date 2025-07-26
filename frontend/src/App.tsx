@@ -4,6 +4,7 @@ import Create_ACC from './Pages/Create_ACC';
 import Home from './Pages/Home';
 import Products from './Pages/Products';
 import Catalog from './Pages/Catalog';
+import Category from './Pages/Category';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Link to="/home">Home</Link>
           <Link to="/products">Products</Link>
           <Link to="/catalog">catalog</Link>
+          <Link to='/categories'>Categories</Link>
         </nav>
       </div>
 
@@ -25,6 +27,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/products" element={<Products />}></Route>
         <Route path="/catalog" element={<Catalog />}></Route>
+        <Route path="/catalog" element={<Category />}></Route>
       </Routes>
     </Router>
   );

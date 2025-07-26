@@ -13,7 +13,6 @@ export class CategoryService {
       if(!category){
         throw new ConflictException('Categoria já existe')
       }
-
       const create_cat=await prisma.category.create({
         data:{
           name:category.name

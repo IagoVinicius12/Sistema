@@ -80,9 +80,6 @@ export default function Category() {
                             <tr className="bg-gray-100">
                                 <th className="py-2 px-4 border-b text-center w-[20%]">ID</th>
                                 <th className="py-2 px-4 border-b text-center w-[30%]">Nome</th>
-                                <th className="py-2 px-4 border-b text-center w-[20%]">Price</th>
-                                <th className="py-2 px-4 border-b text-center w-[20%]">Quantity</th>
-                                <th className="py-2 px-4 border-b text-center w-[10%]">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,6 +87,10 @@ export default function Category() {
                                 <tr key={index} className="hover:bg-gray-50">
                                     <td className="py-2 px-4 border-b text-center border-r-1">{cat.id}</td>
                                     <td className="py-2 px-4 border-b text-center border-r-1">{cat.name}</td>
+                                    {category[index].products.map((product,index2)=>
+                                    <td key= {index2} className="py-2 px-4 border-b text-center border-r-1">{product.name}</td>
+                                    <td key= {index2} className="py-2 px-4 border-b text-center border-r-1">{product.price}</td>
+                                    )}
                                     {/* <td className="py-2 px-4 border-b text-center"><FontAwesomeIcon icon={faTrash} onClick={() => handle_update_all_Category_post_deletion(product.id)} /></td> */}
                                 </tr>
                             )}
