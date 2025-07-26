@@ -9,7 +9,7 @@ export default function Category() {
     const [category, setCat] = useState<Category[]>()
     const [name, setName] = useState<string>('')
     const [pages, setPages] = useState<number[]>()
-    const [currentPage,setCurrentPage]=useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(0)
 
     useEffect(() => {
         handle_get_all_category()
@@ -18,10 +18,10 @@ export default function Category() {
     useEffect(() => {
         if (category) {
             const len_pages = Math.ceil(category?.length / 5)
-            const array_pages=Array.from({length:len_pages},(_,i)=> i)
+            const array_pages = Array.from({ length: len_pages }, (_, i) => i)
             setPages(array_pages)
         }
-    },[category])
+    }, [category])
 
     const handle_typing_product_name = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value)
@@ -43,7 +43,7 @@ export default function Category() {
         if (!token) {
             throw new Error('Não autorizado!!')
         }
-        await Submit_Create_Category(name,token)
+        await Submit_Create_Category(name, token)
     }
 
     // const handle_delete_product = async (id: number) => {
@@ -63,7 +63,7 @@ export default function Category() {
     //     await handle_delete_product(id)
     //     await handle_get_all_category()
     // }
-    const handle_current_page=(index:number)=>{
+    const handle_current_page = (index: number) => {
         setCurrentPage(index)
     }
 
@@ -83,23 +83,24 @@ export default function Category() {
                             </tr>
                         </thead>
                         <tbody>
-                            {category?.slice(5*currentPage, 5*(currentPage+1)).map((cat, index) =>
+                            {category?.slice(5 * currentPage, 5 * (currentPage + 1)).map((cat, index) =>
                                 <tr key={index} className="hover:bg-gray-50">
                                     <td className="py-2 px-4 border-b text-center border-r-1">{cat.id}</td>
                                     <td className="py-2 px-4 border-b text-center border-r-1">{cat.name}</td>
-                                    {category[index].products.map((product,index2)=>
-                                    <td key= {index2} className="py-2 px-4 border-b text-center border-r-1">{product.name}</td>
-                                    <td key= {index2} className="py-2 px-4 border-b text-center border-r-1">{product.price}</td>
+                                    {category[index].products.map((product, index2) =>
+                                        <tr>
+                                            <td key={index2} className="py-2 px-4 border-b text-center border-r-1">{product.name}</td>
+                                            <td key={index2} className="py-2 px-4 border-b text-center border-r-1">{product.price}</td>
+                                        </tr>
                                     )}
-                                    {/* <td className="py-2 px-4 border-b text-center"><FontAwesomeIcon icon={faTrash} onClick={() => handle_update_all_Category_post_deletion(product.id)} /></td> */}
                                 </tr>
                             )}
                         </tbody>
                     </table>
                     <div className="flex justify-center items-center gap-0.5 pt-5">
-                        {pages?.map((index)=>(
-                            <button key={index} className="w-10 h-8 bg-black text-white" onClick={()=>handle_current_page(index)}>
-                                {index+1}
+                        {pages?.map((index) => (
+                            <button key={index} className="w-10 h-8 bg-black text-white" onClick={() => handle_current_page(index)}>
+                                {index + 1}
                             </button>
                         ))}
                     </div>
